@@ -1,0 +1,153 @@
+@prefix-rb-table: rb-table;
+@border-color: #f0f0f0;
+@table-cell-header-bold: @font-family-semibold;
+@table-cell-bold: @font-family-bold;
+@table-cell-regular: @font-family-regular;
+@table-cell-font-color: @font-color-main-theme;
+@scroll-bar-background: @primary-color;
+@scroll-panel-background: #eee;
+@table-background: #FFF;
+
+.@{prefix-rb-table} {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  flex: 1 0 0;
+  padding: 0 15px 15px 0;
+  table {
+    width: 100%;
+    border-spacing: 0;
+    color: #333;
+    font-size: 12px;
+    table-layout: fixed;
+    border: none;
+    word-break: break-all;
+  }
+  &__header {
+    position: relative;
+    overflow: hidden;
+    background: @table-background;
+    &__wrapper {
+      overflow: hidden;
+      position: absolute;
+      &--middle {
+        overflow: hidden;
+        color: @table-cell-font-color;
+        font-family: @table-cell-header-bold;
+      }
+      .big-table-cell {
+        font-size: 14px;
+        position: relative;
+        width: 100%;
+      }
+    }
+  }
+  &__body {
+    position: relative;
+    overflow: hidden;
+    background: @table-background;
+    &__wrapper {
+      overflow: hidden;
+      position: absolute;
+      color: @table-cell-font-color;
+    }
+  }
+  &-cell {
+    padding: 14px 10px;
+    border-bottom: 1px solid @border-color;
+    &--ellipsis {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  &-column-sorter {
+    position: relative;
+    margin-left: 4px;
+    margin-top: -3px;
+    display: inline-block;
+    width: 14px;
+    vertical-align: middle;
+    text-align: center;
+    &-up {
+      margin-bottom: 3px;
+    }
+    &-up,
+    &-down {
+      line-height: 4px;
+      display: block;
+      width: 14px;
+      cursor: pointer;
+      color: #999;
+      &.on {
+        color: #467FFF;
+      }
+      &:hover {
+        color: #76aFFF;
+      }
+      .anticon {
+        display: inline-block;
+        font-size: 14px;
+        transform: scale(0.7) rotate(0deg);
+        zoom: 1.2;
+        line-height: 4px;
+        height: 4px;
+      }
+    }
+  }
+  &-loading-mask {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #666;
+    opacity: .1;
+  }
+  &-loading-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+  }
+  &__hscroll {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    right: 12px;
+    bottom: 0;
+    background: @scroll-panel-background;
+    z-index: 1;
+    height: 8px;
+    &__bar {
+      background: @scroll-bar-background;
+      border-radius: 10px;
+      height: 100%;
+    }
+  }
+  &__vscroll {
+    visibility: hidden;
+    position: absolute;
+    background: @scroll-panel-background;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    right: 3px;
+    &__bar {
+      background: @scroll-bar-background;
+      border-radius: 10px;
+      width: 100%;
+    }
+  }
+}
+
+.big-table-row.big-table-cell--hover {
+  background-color: #FBFCFD;
+  &-pointer {
+    cursor: pointer;
+  }
+}
