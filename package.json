@@ -2,7 +2,9 @@
   "name": "rb-table",
   "version": "0.1.0",
   "description": "High performance table with fixed columns and header support",
-  "main": "index.js",
+  "main": "lib/rb-table.js",
+  "unpkg": "dist/rb-table.js",
+  "module": "es/rb-table.js",
   "scripts": {
     "clean": "rimraf lib dist es coverage",
     "lint": "eslint src test build",
@@ -27,13 +29,16 @@
     "react": ">=16.0.0",
     "react-dom": ">=16.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "normalize-wheel": "^1.0.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.3",
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
@@ -42,12 +47,10 @@
     "cross-env": "^5.1.4",
     "glob": "^7.1.1",
     "jest": "^22.4.3",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-virtualized": "~9.20.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.58.0",
     "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^3.0.0",

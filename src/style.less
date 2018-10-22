@@ -1,153 +1,113 @@
 @prefix-rb-table: rb-table;
-@border-color: #f0f0f0;
-@table-cell-header-bold: @font-family-semibold;
-@table-cell-bold: @font-family-bold;
-@table-cell-regular: @font-family-regular;
-@table-cell-font-color: @font-color-main-theme;
-@scroll-bar-background: @primary-color;
-@scroll-panel-background: #eee;
-@table-background: #FFF;
-
+@rb-table-cell-border-color: #f0f0f0;
+@rb-table-scroll-bar-color: @primary-color;
+@rb-table-scroll-bar-background: #eee;
+@rb-table-scroll-bar-width: 10px;
+@rb-table-scroll-bar-padding: 1px;
+@rb-table-scroll-bar-right-offset: 2px;
+@prefix-rb-table-padding: (@rb-table-scroll-bar-width + 5px);
+@rb-table-background: #FFF;
+@rb-table-color: #333;
+@rb-table-row-hover-background: lighten(@primary-color, 55%);
 .@{prefix-rb-table} {
-  width: 100%;
   overflow: hidden;
   position: relative;
   flex: 1 0 0;
-  padding: 0 15px 15px 0;
+  padding: 0 @prefix-rb-table-padding @prefix-rb-table-padding 0;
+  background: @rb-table-background;
+  color: @rb-table-color;
   table {
     width: 100%;
     border-spacing: 0;
-    color: #333;
     font-size: 12px;
     table-layout: fixed;
     border: none;
     word-break: break-all;
   }
-  &__header {
+  &-scrollx {
+    height: 100%;
     position: relative;
-    overflow: hidden;
-    background: @table-background;
-    &__wrapper {
-      overflow: hidden;
-      position: absolute;
-      &--middle {
-        overflow: hidden;
-        color: @table-cell-font-color;
-        font-family: @table-cell-header-bold;
-      }
-      .big-table-cell {
-        font-size: 14px;
-        position: relative;
-        width: 100%;
-      }
-    }
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding-bottom: 99999px;
   }
   &__body {
-    position: relative;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-right: 300px;
+    .@{prefix-rb-table}-hidden-layout {
+      position: fixed;
+      visibility: hidden;
+      top: 1000000px;
+      width: -webkit-max-content;
+      width: -moz-max-content;
+      width: max-content;
+      table-layout: auto;
+    }
+  }
+  &-fixed {
     overflow: hidden;
-    background: @table-background;
-    &__wrapper {
+    position: absolute;
+    top: 0;
+    background: @rb-table-background;
+    table {
+      width: auto;
+    }
+    &__body {
       overflow: hidden;
-      position: absolute;
-      color: @table-cell-font-color;
+    }
+    &--left {
+      left: 0;
+      border-right: 1px solid @rb-table-cell-border-color;
+    }
+    &--right {
+      right: @prefix-rb-table-padding;
+      border-left: 1px solid @rb-table-cell-border-color;
+    }
+  }
+  &-row {
+    &--hover {
+      background-color: @rb-table-row-hover-background;
+    }
+    &--clickable {
+      cursor: pointer;
     }
   }
   &-cell {
     padding: 14px 10px;
-    border-bottom: 1px solid @border-color;
-    &--ellipsis {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-  }
-  &-column-sorter {
-    position: relative;
-    margin-left: 4px;
-    margin-top: -3px;
-    display: inline-block;
-    width: 14px;
-    vertical-align: middle;
-    text-align: center;
-    &-up {
-      margin-bottom: 3px;
-    }
-    &-up,
-    &-down {
-      line-height: 4px;
-      display: block;
-      width: 14px;
-      cursor: pointer;
-      color: #999;
-      &.on {
-        color: #467FFF;
-      }
-      &:hover {
-        color: #76aFFF;
-      }
-      .anticon {
-        display: inline-block;
-        font-size: 14px;
-        transform: scale(0.7) rotate(0deg);
-        zoom: 1.2;
-        line-height: 4px;
-        height: 4px;
-      }
-    }
-  }
-  &-loading-mask {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: #666;
-    opacity: .1;
-  }
-  &-loading-wrapper {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
+    border-bottom: 1px solid @rb-table-cell-border-color;
+    font-size: 12px;
   }
   &__hscroll {
     visibility: hidden;
     position: absolute;
     left: 0;
-    right: 12px;
     bottom: 0;
-    background: @scroll-panel-background;
+    right: @rb-table-scroll-bar-width + @rb-table-scroll-bar-right-offset;
+    padding: @rb-table-scroll-bar-padding 0;
+    background: @rb-table-scroll-bar-background;
+    height: @rb-table-scroll-bar-width;
     z-index: 1;
-    height: 8px;
     &__bar {
-      background: @scroll-bar-background;
-      border-radius: 10px;
+      background: @rb-table-scroll-bar-color;
+      border-radius: @rb-table-scroll-bar-width;
       height: 100%;
     }
   }
   &__vscroll {
     visibility: hidden;
     position: absolute;
-    background: @scroll-panel-background;
-    z-index: 1;
+    background: @rb-table-scroll-bar-background;
     top: 0;
     bottom: 0;
-    width: 8px;
-    right: 3px;
+    right: @rb-table-scroll-bar-right-offset;
+    padding: 0 @rb-table-scroll-bar-padding;
+    width: @rb-table-scroll-bar-width;
+    z-index: 1;
     &__bar {
-      background: @scroll-bar-background;
-      border-radius: 10px;
+      background: @rb-table-scroll-bar-color;
+      border-radius: @rb-table-scroll-bar-width;
       width: 100%;
     }
-  }
-}
-
-.big-table-row.big-table-cell--hover {
-  background-color: #FBFCFD;
-  &-pointer {
-    cursor: pointer;
   }
 }

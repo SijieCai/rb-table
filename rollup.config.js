@@ -1,4 +1,5 @@
 import nodeResolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import uglify from 'rollup-plugin-uglify'
@@ -22,6 +23,9 @@ if (env === 'es' || env === 'cjs') {
       plugins: ['external-helpers']
     })
   )
+  config.external = [
+    'react', 'prop-types', 'normalize-wheel'
+  ]
 }
 
 if (env === 'development' || env === 'production') {
@@ -37,8 +41,8 @@ if (env === 'development' || env === 'production') {
     }),
     babel({
       exclude: 'node_modules/**',
-      plugins: ['external-helpers']
     }),
+    commonjs(),
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)
     })
