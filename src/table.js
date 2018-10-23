@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import normalizeWheel from 'normalize-wheel'
-import {addResizeListener, removeResizeListener} from './resize-detect';
+import { addResizeListener, removeResizeListener } from './resize-detect';
 
 function renderSomething(item, ...props) {
   if (!item) return;
@@ -43,35 +43,20 @@ function minMaxWidthType(props, propName, componentName) {
     );
   }
 }
-export default class extends React.Component {
-  static propTypes = {
-    columns: PropTypes.arrayOf(PropTypes.shape({
-      header: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.func,
-        PropTypes.element
-      ]).isRequired,
-      cell: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.func,
-        PropTypes.element
-      ]).isRequired,
-      width: PropTypes.number,
-      minWidth: minMaxWidthType,
-      maxWidth: minMaxWidthType,
-      fixed: PropTypes.oneOf(['left', 'right']),
-      className: PropTypes.string,
-      onRowClick: PropTypes.func
-    })),
-    data: PropTypes.array.isRequired,
-    prefixCls: PropTypes.string.isRequired,
-  }
+export default class RBTable extends React.Component {
 
-  static defaultProps = {
-    prefixCls: 'rb-table',
-    data: []
+  constructor(props) {
+    super(props);
+    this.setTableRef = this.setTableRef.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleClickRow = this.handleClickRow.bind(this);
+    this.handleWindowMouseUp = this.handleWindowMouseUp.bind(this);
+    this.handleWindowMouseMove = this.handleWindowMouseMove.bind(this);
+    this.hScrollPanelMouseDown = this.hScrollPanelMouseDown.bind(this);
+    this.vScrollPanelMouseDown = this.vScrollPanelMouseDown.bind(this);
+    this.hScrollBarMouseDown = this.hScrollBarMouseDown.bind(this);
+    this.vScrollBarMouseDown = this.vScrollBarMouseDown.bind(this);
   }
 
   componentWillUnmount() {
@@ -89,7 +74,7 @@ export default class extends React.Component {
     });
   }
 
-  setTableRef = (table) => {
+  setTableRef(table) {
     if (table) {
       if (this.table) {
         removeResizeListener(this.table, this.handleResize);
@@ -103,7 +88,7 @@ export default class extends React.Component {
     this.reflow();
   }
 
-  handleResize = () => {
+  handleResize() {
     this.reflow();
   }
 
@@ -112,7 +97,7 @@ export default class extends React.Component {
     this.scrollByOffset(0, 0);
   }
 
-  handleScroll = (e) => {
+  handleScroll(e) {
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
@@ -123,7 +108,7 @@ export default class extends React.Component {
     }
   }
 
-  handleClickRow = (item, i) => {
+  handleClickRow(item, i) {
     this.props.onRowClick && this.props.onRowClick(item, i)
   }
 
@@ -132,48 +117,46 @@ export default class extends React.Component {
     this.y = clientY;
   }
 
-  handleWindowMouseUp = () => {
+  handleWindowMouseUp() {
     this.mouseIsDownRight = false;
     this.mouseIsDownBottom = false;
   }
 
-  handleWindowMouseMove = ({ clientX, clientY }) => {
+  handleWindowMouseMove({ clientX, clientY }) {
     if (this.mouseIsDownBottom) {
-      this.throttleMouseMove(clientX, 0);
+      this.handleMouseMove(clientX, 0);
     } else if (this.mouseIsDownRight) {
-      this.throttleMouseMove(0, clientY);
+      this.handleMouseMove(0, clientY);
     }
   }
 
-  hScrollPanelMouseDown = (e) => {
+  hScrollPanelMouseDown(e) {
     e.preventDefault();
     let x = e.clientX - this.refs.hScrollBar.getBoundingClientRect().left;
     this.scrollByOffset(x, 0);
   }
 
-  vScrollPanelMouseDown = (e) => {
+  vScrollPanelMouseDown(e) {
     e.preventDefault();
     let y = e.clientY - this.refs.vScrollBar.getBoundingClientRect().top;
     this.scrollByOffset(0, y);
   }
 
-  hScrollBarMouseDown = (e) => {
+  hScrollBarMouseDown(e) {
     e.preventDefault();
     e.stopPropagation();
     this.mouseIsDownBottom = true;
     this.setLocation(e);
   }
 
-  vScrollBarMouseDown = (e) => {
+  vScrollBarMouseDown(e) {
     e.preventDefault();
     e.stopPropagation();
     this.mouseIsDownRight = true;
     this.setLocation(e);
   }
 
-  throttleMouseMove = (...args) => this.handleMouseMove(...args)
-
-  handleMouseMove = (clientX, clientY) => {
+  handleMouseMove(clientX, clientY) {
     const offsetX = clientX - this.x;
     var offsetY = clientY - this.y;
     this.setLocation(clientX, clientY);
@@ -194,11 +177,12 @@ export default class extends React.Component {
     return [bodyMiddleContent, bodyLeftContent, bodyRightContent].filter(i => !!i);
   }
 
-  handleRowEnter = (i) => {
+
+  handleRowEnter(i) {
     this.bodies().forEach(body => body.children[i].className += this.getHoverClass())
   }
 
-  handleRowLeave = i => {
+  handleRowLeave(i) {
     this.bodies().forEach(body => body.children[i].className = body.children[i].className.replace(this.getHoverClass(), ''))
   }
 
@@ -245,7 +229,7 @@ export default class extends React.Component {
   }
 
   // 对齐表格的，主要是表头固定，左右两列也是固定，都是手动通过代码进行固定
-  alignTable = () => {
+  alignTable() {
     const { headerLeft, headerRight, body } = this.refs;
     const { columns } = this.props;
 
@@ -556,4 +540,34 @@ export default class extends React.Component {
       </div>
     )
   }
+}
+
+RBTable.propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    header: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.func,
+      PropTypes.element
+    ]).isRequired,
+    cell: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.func,
+      PropTypes.element
+    ]).isRequired,
+    width: PropTypes.number,
+    minWidth: minMaxWidthType,
+    maxWidth: minMaxWidthType,
+    fixed: PropTypes.oneOf(['left', 'right']),
+    className: PropTypes.string,
+    onRowClick: PropTypes.func
+  })),
+  data: PropTypes.array.isRequired,
+  prefixCls: PropTypes.string.isRequired,
+}
+
+RBTable.defaultProps = {
+  prefixCls: 'rb-table',
+  data: []
 }

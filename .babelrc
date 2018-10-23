@@ -20,7 +20,6 @@
     ]
   ],
   "plugins": [
-    "transform-class-properties",
     "transform-object-rest-spread"
   ],
   "env": {
@@ -29,8 +28,27 @@
         [
           "env",
           {
+            "loose": true
+          }
+        ]
+      ]
+    },
+    "mjs": {
+      "plugins": [
+        "transform-react-remove-prop-types"
+      ],
+      "presets": [
+        "react",
+        "stage-1",
+        [
+          "env",
+          {
             "loose": true,
-            "esmodules": true
+            "modules": false,
+            "targets": {
+              "browsers": "last 5 chrome versions",
+              "esmodules": true
+            }
           }
         ]
       ]

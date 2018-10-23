@@ -1,6 +1,6 @@
 @prefix-rb-table: rb-table;
 @rb-table-cell-border-color: #f0f0f0;
-@rb-table-scroll-bar-color: @primary-color;
+@rb-table-scroll-bar-color: #777;
 @rb-table-scroll-bar-background: #eee;
 @rb-table-scroll-bar-width: 10px;
 @rb-table-scroll-bar-padding: 1px;
@@ -8,11 +8,10 @@
 @prefix-rb-table-padding: (@rb-table-scroll-bar-width + 5px);
 @rb-table-background: #FFF;
 @rb-table-color: #333;
-@rb-table-row-hover-background: lighten(@primary-color, 55%);
+@rb-table-row-hover-background: lighten(@rb-table-scroll-bar-color, 55%);
 .@{prefix-rb-table} {
   overflow: hidden;
   position: relative;
-  flex: 1 0 0;
   padding: 0 @prefix-rb-table-padding @prefix-rb-table-padding 0;
   background: @rb-table-background;
   color: @rb-table-color;
@@ -25,7 +24,6 @@
     word-break: break-all;
   }
   &-scrollx {
-    height: 100%;
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;

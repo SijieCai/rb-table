@@ -1,0 +1,111 @@
+$prefix-rb-table: rb-table;
+$rb-table-cell-border-color: #f0f0f0;
+$rb-table-scroll-bar-color: #777;
+$rb-table-scroll-bar-background: #eee;
+$rb-table-scroll-bar-width: 10px;
+$rb-table-scroll-bar-padding: 1px;
+$rb-table-scroll-bar-right-offset: 2px;
+$prefix-rb-table-padding: ($rb-table-scroll-bar-width + 5px);
+$rb-table-background: #FFF;
+$rb-table-color: #333;
+$rb-table-row-hover-background: lighten($rb-table-scroll-bar-color, 55%);
+.#{prefix-rb-table} {
+  overflow: hidden;
+  position: relative;
+  padding: 0 $prefix-rb-table-padding $prefix-rb-table-padding 0;
+  background: $rb-table-background;
+  color: $rb-table-color;
+  table {
+    width: 100%;
+    border-spacing: 0;
+    font-size: 12px;
+    table-layout: fixed;
+    border: none;
+    word-break: break-all;
+  }
+  &-scrollx {
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    padding-bottom: 99999px;
+  }
+  &__body {
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-right: 300px;
+    .#{prefix-rb-table}-hidden-layout {
+      position: fixed;
+      visibility: hidden;
+      top: 1000000px;
+      width: -webkit-max-content;
+      width: -moz-max-content;
+      width: max-content;
+      table-layout: auto;
+    }
+  }
+  &-fixed {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    background: $rb-table-background;
+    table {
+      width: auto;
+    }
+    &__body {
+      overflow: hidden;
+    }
+    &--left {
+      left: 0;
+      border-right: 1px solid $rb-table-cell-border-color;
+    }
+    &--right {
+      right: $prefix-rb-table-padding;
+      border-left: 1px solid $rb-table-cell-border-color;
+    }
+  }
+  &-row {
+    &--hover {
+      background-color: $rb-table-row-hover-background;
+    }
+    &--clickable {
+      cursor: pointer;
+    }
+  }
+  &-cell {
+    padding: 14px 10px;
+    border-bottom: 1px solid $rb-table-cell-border-color;
+    font-size: 12px;
+  }
+  &__hscroll {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: $rb-table-scroll-bar-width + $rb-table-scroll-bar-right-offset;
+    padding: $rb-table-scroll-bar-padding 0;
+    background: $rb-table-scroll-bar-background;
+    height: $rb-table-scroll-bar-width;
+    z-index: 1;
+    &__bar {
+      background: $rb-table-scroll-bar-color;
+      border-radius: $rb-table-scroll-bar-width;
+      height: 100%;
+    }
+  }
+  &__vscroll {
+    visibility: hidden;
+    position: absolute;
+    background: $rb-table-scroll-bar-background;
+    top: 0;
+    bottom: 0;
+    right: $rb-table-scroll-bar-right-offset;
+    padding: 0 $rb-table-scroll-bar-padding;
+    width: $rb-table-scroll-bar-width;
+    z-index: 1;
+    &__bar {
+      background: $rb-table-scroll-bar-color;
+      border-radius: $rb-table-scroll-bar-width;
+      width: 100%;
+    }
+  }
+}
