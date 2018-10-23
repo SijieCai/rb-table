@@ -5,6 +5,12 @@
   "main": "lib/rb-table.js",
   "unpkg": "dist/rb-table.js",
   "module": "es/rb-table.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src"
+  ],
   "scripts": {
     "clean": "rimraf lib dist es coverage",
     "lint": "eslint src test build",
