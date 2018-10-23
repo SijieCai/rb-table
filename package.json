@@ -1,6 +1,6 @@
 {
   "name": "rb-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "High performance table with fixed columns and header support",
   "main": "lib/rb-table.js",
   "unpkg": "dist/rb-table.js",
