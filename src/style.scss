@@ -32,6 +32,7 @@ $rb-table-row-hover-background: lighten($rb-table-scroll-bar-color, 55%);
   &__body {
     overflow: scroll;
     overflow-x: hidden;
+    box-sizing: border-box;
     padding-right: 300px;
     .#{prefix-rb-table}-hidden-layout {
       position: fixed;
