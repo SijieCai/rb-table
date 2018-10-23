@@ -18,10 +18,18 @@
   "keywords": [
     "react",
     "table",
+    "auto width",
     "fixed column",
-    "fixed header"
+    "fixed header",
+    "custom scrollbar",
+    "less",
+    "sass"
   ],
-  "author": "SijieCai",
+  "repository": "github:sijiecai/rb-table",
+  "bugs": "https://github.com/sijiecai/rb-table/issues",
+  "authors": [
+    "Sijie Cai <sijie.cai@qq.com> (https://github.com/sijiecai)"
+  ],
   "license": "ISC",
   "peerDependencies": {
     "react": ">=16.0.0",
