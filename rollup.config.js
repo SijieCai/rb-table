@@ -97,6 +97,9 @@ export default [
         'prop-types': 'PropTypes'
       }
     },
+    external: [
+      ...Object.keys(pkg.peerDependencies || {})
+    ],
     plugins: [
       nodeResolve({
         jsnext: true
@@ -126,6 +129,9 @@ export default [
         'prop-types': 'PropTypes'
       }
     },
+    external: [
+      ...Object.keys(pkg.peerDependencies || {})
+    ],
     plugins: [
       nodeResolve({
         jsnext: true
@@ -165,6 +171,9 @@ export default [
         'prop-types': 'PropTypes'
       }
     },
+    external: [
+      ...Object.keys(pkg.peerDependencies || {})
+    ],
     plugins: [
       nodeResolve({
         jsnext: true

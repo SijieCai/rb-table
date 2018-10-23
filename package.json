@@ -1,6 +1,6 @@
 {
   "name": "rb-table",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "High performance table with fixed columns and header support",
   "main": "lib/rb-table.js",
   "unpkg": "dist/rb-table.js",
@@ -13,14 +13,6 @@
   ],
   "scripts": {
     "clean": "rimraf lib dist es coverage",
-    "lint": "eslint src test build",
-    "test": "cross-env BABEL_ENV=commonjs jest",
-    "test:watch": "npm test -- --watch",
-    "test:cov": "npm test -- --coverage",
-    "build:commonjs": "cross-env NODE_ENV=cjs rollup -c -o lib/rb-table.js",
-    "build:es": "cross-env BABEL_ENV=es NODE_ENV=es rollup -c -o es/rb-table.js",
-    "build:umd": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c -o dist/rb-table.js",
-    "build:umd:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -o dist/rb-table.min.js",
     "build": "npm run clean && rollup -c"
   },
   "keywords": [
