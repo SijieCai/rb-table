@@ -104,4 +104,4 @@ Changes are tracked as [GitHub releases](https://github.com/sijiecai/rb-table/re
 License
 -------
 
-`rb-table` is [MIT-licensed](https://github.com/sijiecai/rb-table/master/LICENSE).
+`rb-table` is [MIT-licensed](https://github.com/SijieCai/rb-table/blob/master/LICENSE).
