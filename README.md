@@ -16,17 +16,17 @@ For npm:
 npm install --save rb-table
 ```
 Add the default stylesheet, you can choose css/sass/less version by just change the suffix.
-```
+```shell
 import 'rb-table/dist/rb-table.css';
 ```
 For cdn version
 
-```
+```html
 <script src="https://unpkg.com/rb-table@1/dist/rb-table.bundle.min.js" crossorigin></script>
 ```
 Put `<RBTable/>` in your page with props and you are good to go.
 
-```
+```javascript
 <RBTable 
 	columns={[
 		{ header: () => 'header 1', cell: i => i },
