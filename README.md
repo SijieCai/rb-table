@@ -65,7 +65,7 @@ Put `<RBTable/>` in your page with props and you are good to go.
 
 ## Customize Theme
 `rb-table` provide the less/scss style file with predefined theme variables, so you can easily customize the look by modifying these variable as well as override the default style. if you are useing wepack, bellow is an example as well as a complete list of variables:
-```
+```less
 // my-rb-table.less
 @import "~rb-table"
 @prefix-rb-table: rb-table;
