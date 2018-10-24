@@ -401,7 +401,7 @@ export default class RBTable extends React.Component {
         <thead>
           <tr className={`${prefixCls}-row ${prefixCls}-row--header`}>
             {columns.map((column, i) =>
-              <td key={column.dataIndex || i} className={`${prefixCls}-cell ${prefixCls}-cell--header`} style={column.headerStyle}>
+              <td key={column.dataIndex || i} className={`${prefixCls}-cell ${prefixCls}-cell--header ${column.headerClassName || ''}`} style={column.headerStyle}>
                 {renderSomething(column.header, params.data, column)}
               </td>
             )}
@@ -560,11 +560,14 @@ RBTable.propTypes = {
     minWidth: minMaxWidthType,
     maxWidth: minMaxWidthType,
     fixed: PropTypes.oneOf(['left', 'right']),
-    className: PropTypes.string,
-    onRowClick: PropTypes.func
+    headerClassName: PropTypes.string,
+    cellClassName: PropTypes.string,
+    headerStyle: PropTypes.obj,
+    cellStyle: PropTypes.obj
   })),
   data: PropTypes.array.isRequired,
   prefixCls: PropTypes.string.isRequired,
+  onRowClick: PropTypes.func
 }
 
 RBTable.defaultProps = {

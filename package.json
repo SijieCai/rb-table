@@ -1,6 +1,6 @@
 {
   "name": "rb-table",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "High performance table with fixed columns and header support",
   "main": "lib/rb-table.js",
   "unpkg": "dist/rb-table.js",
@@ -13,7 +13,8 @@
   ],
   "scripts": {
     "clean": "rimraf lib dist es coverage",
-    "build": "npm run clean && rollup -c"
+    "build": "npm run clean && rollup -c",
+    "prepare": "npm run clean && npm run build"
   },
   "keywords": [
     "react",
