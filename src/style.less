@@ -1,10 +1,10 @@
 @prefix-rb-table: rb-table;
-@rb-table-cell-border-color: #f0f0f0;
-@rb-table-scroll-bar-color: #777;
-@rb-table-scroll-bar-background: #eee;
-@rb-table-scroll-bar-width: 10px;
-@rb-table-scroll-bar-padding: 1px;
-@rb-table-scroll-bar-right-offset: 2px;
+@rb-table-cell-border-color: #e8e8e8;
+@rb-table-scroll-bar-color: #bfbfbf;
+@rb-table-scroll-bar-color-hover: darken(@rb-table-scroll-bar-color, 25%);
+@rb-table-scroll-bar-background: #f9f9f9;
+@rb-table-scroll-bar-width: 12px;
+@rb-table-scroll-bar-padding: 2px;
 @prefix-rb-table-padding: (@rb-table-scroll-bar-width + 5px);
 @rb-table-background: #FFF;
 @rb-table-color: #333;
@@ -12,7 +12,6 @@
 .@{prefix-rb-table} {
   overflow: hidden;
   position: relative;
-  padding: 0 @prefix-rb-table-padding @prefix-rb-table-padding 0;
   background: @rb-table-background;
   color: @rb-table-color;
   table {
@@ -60,7 +59,7 @@
       border-right: 1px solid @rb-table-cell-border-color;
     }
     &--right {
-      right: @prefix-rb-table-padding;
+      right: 0;
       border-left: 1px solid @rb-table-cell-border-color;
     }
   }
@@ -82,7 +81,7 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    right: @rb-table-scroll-bar-width + @rb-table-scroll-bar-right-offset;
+    right: @rb-table-scroll-bar-width;
     padding: @rb-table-scroll-bar-padding 0;
     background: @rb-table-scroll-bar-background;
     height: @rb-table-scroll-bar-width;
@@ -91,6 +90,9 @@
       background: @rb-table-scroll-bar-color;
       border-radius: @rb-table-scroll-bar-width;
       height: 100%;
+      &:hover {
+        background: @rb-table-scroll-bar-color-hover;
+      }
     }
   }
   &__vscroll {
@@ -99,7 +101,7 @@
     background: @rb-table-scroll-bar-background;
     top: 0;
     bottom: 0;
-    right: @rb-table-scroll-bar-right-offset;
+    right: 0;
     padding: 0 @rb-table-scroll-bar-padding;
     width: @rb-table-scroll-bar-width;
     z-index: 1;
@@ -107,6 +109,27 @@
       background: @rb-table-scroll-bar-color;
       border-radius: @rb-table-scroll-bar-width;
       width: 100%;
+      &:hover {
+        background: @rb-table-scroll-bar-color-hover;
+      }
+    }
+  }
+}
+
+.rb-table-fixed--left,
+.rb-table-scrollx {
+  .rb-table-cell {
+    &:first-child {
+      padding-left: 30px;
+    }
+  }
+}
+
+.rb-table-fixed--right,
+.rb-table-scrollx {
+  .rb-table-cell {
+    &:last-child {
+      padding-right: 30px;
     }
   }
 }

@@ -98,12 +98,13 @@ export default class RBTable extends React.Component {
   }
 
   handleScroll(e) {
+    if (this.autoSize) return;
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
-    e.preventDefault();
     if (hasOffset) {
+      e.preventDefault();
       e.stopPropagation();
     }
   }
@@ -177,7 +178,6 @@ export default class RBTable extends React.Component {
     return [bodyMiddleContent, bodyLeftContent, bodyRightContent].filter(i => !!i);
   }
 
-
   handleRowEnter(i) {
     this.bodies().forEach(body => body.children[i].className += this.getHoverClass())
   }
@@ -231,7 +231,7 @@ export default class RBTable extends React.Component {
   // 对齐表格的，主要是表头固定，左右两列也是固定，都是手动通过代码进行固定
   alignTable() {
     const { headerLeft, headerRight, body } = this.refs;
-    const { columns } = this.props;
+    const { columns, prefixCls } = this.props;
 
     const fixedHeaders = [headerLeft, headerRight].filter(i => !!i);
 
@@ -245,7 +245,7 @@ export default class RBTable extends React.Component {
     // 获取 header 行高
     const headerBodyHeight = this.refs.virtualTable.querySelector('thead > tr').clientHeight;
     // 获取 table 高度 
-    const tableClientHeight = this.table.clientHeight;
+    let tableClientHeight = this.table.clientHeight;
     // 获取 hscrollbar 高度
     const hScrollbarHeight = this.refs.hScrollPanel.offsetHeight;
 
@@ -276,7 +276,7 @@ export default class RBTable extends React.Component {
     // 设置 header 宽度 = totalWidth
     setWidth(this.refs.header, px(totalWidth))
     // 设置 body 宽度，用来隐藏滚动条  
-    body.style.width = px(this.refs.header.clientWidth + 300 + body.offsetWidth - body.clientWidth);
+    body.style.width = px(this.refs.header.clientWidth + (this.autoSize ? 0 : (300 + body.offsetWidth - body.clientWidth)));
 
     let headerHeight = this.refs.header.offsetHeight;
     // 设置 header 行高
@@ -290,15 +290,32 @@ export default class RBTable extends React.Component {
     });
 
     // 设置高度，形成一个上下布局，上部固定高度，底部（body）占满
-    this.refs.body.style.height = px(tableClientHeight - headerHeight - hScrollbarHeight)
+    if (tableClientHeight > 99999 || this.autoSize) {
+
+      this.autoSize = true;
+      body.style.width = px(this.refs.header.clientWidth);
+      this.refs.scrollX.style.paddingBottom = 0;
+      this.refs.scrollX.style.overflowX = 'auto';
+      this.refs.body.style.paddingRight = 0;
+      this.refs.body.style.overflowY = 'hidden';
+      this.table.querySelector(`.${prefixCls}-fixed--right`).style.right = 0;
+      this.table.style.height = px(this.refs.scrollX.offsetHeight);
+    } else {
+      let height = tableClientHeight - headerHeight - hScrollbarHeight;
+      this.refs.body.style.height = px(height);
+    }
 
   }
 
   scrollByOffset(offsetX, offsetY) {
-    if (!this.table) return;
     var { bodyMiddle,
       hScrollBar, hScrollPanel,
       vScrollBar, vScrollPanel } = this.refs;
+    if (!this.table || this.autoSize) {
+      hScrollPanel.style.visibility = 'hidden';
+      vScrollPanel.style.visibility = 'hidden';
+      return;
+    }
     if (!bodyMiddle) return;
     const bodyWidth = this.refs.scrollX.offsetWidth;
     // body 内容高度，不包含 header
