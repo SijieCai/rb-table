@@ -50,7 +50,7 @@ Put `<RBTable/>` in your page with props and you are good to go.
 ### ColumnProps
 
 | Property  | Description  | Type  |
-| ------------ | ------------ | ------------ | ------------ |
+| ------------ | ------------ | ------------ |
 | header | Render column header  | string &#124; number &#124; element &#124; function(data, column)  |
 |  cell | Render column cell  | string &#124; number &#124; element &#124; function(rowData, data, column)  |
 |  width | Specify column width in `px`, if not specify the width will be auto calculate to fit content in one row, when the total width of table is exceed a horizontal scrollbar will be show | number |
