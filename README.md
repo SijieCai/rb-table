@@ -43,24 +43,24 @@ Put `<RBTable/>` in your page with props and you are good to go.
 | Property  | Description  | Type  | Default  |
 | ------------ | ------------ | ------------ | ------------ |
 | columns | Columns of table  | Array<[ColumnProps](#ColumnProps)>  | - |
-|  data | Data to be displayed  | Array<any>  | - |
+|  data | Data to be displayed  | Array	&#60;any&#62;  | - |
 | onRowClick  | Event callback on row click, if provided an extra class 'rb-table-row--clickable' will append to each body row    | function  | - |
 | prefixCls  | Classname prefix, if specified must use with less/sass style and override  variable `@prefix-rb-table` with the same value | string  | 'rb-table' |
 
 ### ColumnProps
 
-| Property  | Description  | Type  | Default  |
+| Property  | Description  | Type  |
 | ------------ | ------------ | ------------ | ------------ |
-| header | Render column header  | string &#124; number &#124; element &#124; function(data, column)  | - |
-|  cell | Render column cell  | string &#124; number &#124; element &#124; function(rowData, data, column)  | - |
-|  width | Specify column width in `px`, if not specify the width will be auto calculate to fit content in one row, when the total width of table is exceed a horizontal scrollbar will be show | number | - |
-|  minWidth | Specify column minimum  width in `px` only when width is not set | number | - |
-|  maxWidth | Specify column maximum width in `px` only when width is not set | number | - |
-|  fixed | Specify fixed columns | 'left' &#124; 'right' | - |
-|  cellClassName | Additional cell class | string | - |
-|  cellStyle | Additional cell style | object | - |
-|  headerClassName | Additional header class | string | - |
-|  headerStyle | Additional header style | object | - |
+| header | Render column header  | string &#124; number &#124; element &#124; function(data, column)  |
+|  cell | Render column cell  | string &#124; number &#124; element &#124; function(rowData, data, column)  |
+|  width | Specify column width in `px`, if not specify the width will be auto calculate to fit content in one row, when the total width of table is exceed a horizontal scrollbar will be show | number |
+|  minWidth | Specify column minimum  width in `px` only when width is not set | number |
+|  maxWidth | Specify column maximum width in `px` only when width is not set | number |
+|  fixed | Specify column to be fixed on left or right, if not specified will scroll when it is neccessary  | 'left' &#124; 'right' |
+|  cellClassName | Additional cell class | string |
+|  cellStyle | Additional cell style | object |
+|  headerClassName | Additional header class | string |
+|  headerStyle | Additional header style | object |
 
 
 ## Customize Theme
