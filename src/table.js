@@ -520,7 +520,7 @@ export default class RBTable extends React.Component {
             {this.renderVirtualTable(getParams('virtual'))}
           </div>
         </div>
-        {leftColumns.length &&
+        {!!leftColumns.length &&
           <div className={`${prefixCls}-fixed ${prefixCls}-fixed--left`}>
             <div className={`${prefixCls}-fixed__header`}>
               {this.renderHeaderSideOf(getParams('Left'))}
@@ -530,7 +530,7 @@ export default class RBTable extends React.Component {
             </div>
           </div>
         }
-        {rightColumns.length &&
+        {!!rightColumns.length &&
           <div className={`${prefixCls}-fixed ${prefixCls}-fixed--right`}>
             <div className={`${prefixCls}-fixed__header`}>
               {this.renderHeaderSideOf(getParams('Right'))}
