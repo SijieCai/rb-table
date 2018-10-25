@@ -203,8 +203,9 @@ export default class RBTable extends React.Component {
 
     virtualTable.style.width = '';
 
-    if (virtualTable.clientWidth < scrollX.clientWidth) {
-      virtualTable.style.width = px(scrollX.clientWidth);
+    if (virtualTable.offsetWidth < scrollX.clientWidth - this.props.columns.length ) {
+      // 获取列换的加了1，这个减掉
+      virtualTable.style.width = px(scrollX.clientWidth - this.props.columns.length );
     }
 
     const headerRow = virtualTable.querySelector('thead > tr');
@@ -288,6 +289,7 @@ export default class RBTable extends React.Component {
       }
     });
     totalWidth = Math.max(totalWidth, this.refs.scrollX.clientWidth);
+    console.log('totalWidth', totalWidth);
     // 设置 header 宽度 = totalWidth
     setWidth(this.refs.header, px(totalWidth))
     // 设置 body 宽度，用来隐藏滚动条  

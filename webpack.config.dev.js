@@ -1,6 +1,6 @@
 const config = require('./webpack.config');
-
-config.mode = 'production';
+const path = require('path');
+config.mode = 'development';
 config.devServer = {
   contentBase: path.join(__dirname, 'doc'),
   compress: true,
