@@ -7,7 +7,7 @@ function renderSomething(item, ...props) {
   if (!item) return;
   if (typeof (item) === 'string' || typeof (item) === 'number') return item;
   if (typeof (item) === 'function') return item(...props);
-  if (React.isValidElement(item)) return React.cloneElement(item, { tableContext: props });
+  if (React.isValidElement(item)) return React.cloneElement(item, { tablecontext: props });
 }
 function getWidthStyle(r) {
   if (r.width) {
@@ -298,7 +298,6 @@ export default class RBTable extends React.Component {
       this.refs.scrollX.style.overflowX = 'auto';
       this.refs.body.style.paddingRight = 0;
       this.refs.body.style.overflowY = 'hidden';
-      this.table.querySelector(`.${prefixCls}-fixed--right`).style.right = 0;
       this.table.style.height = px(this.refs.scrollX.offsetHeight);
     } else {
       let height = tableClientHeight - headerHeight - hScrollbarHeight;

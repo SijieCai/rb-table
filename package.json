@@ -12,6 +12,7 @@
     "src"
   ],
   "scripts": {
+    "start": "webpack",
     "clean": "rimraf lib dist es coverage",
     "build": "npm run clean && rollup -c",
     "prepare": "npm run clean && npm run build"
@@ -45,6 +46,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.3",
+    "babel-loader": "^7.1.5",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -54,9 +56,11 @@
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
     "cross-env": "^5.1.4",
+    "css-loader": "^1.0.0",
     "glob": "^7.1.1",
     "jest": "^22.4.3",
     "less": "^3.8.1",
+    "less-loader": "^4.1.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.66.0",
     "rollup-plugin-babel": "^3.0.3",
@@ -66,6 +70,10 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-postcss": "^1.6.2",
     "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-terser": "^3.0.0"
+    "rollup-plugin-terser": "^3.0.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.23.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   }
 }
