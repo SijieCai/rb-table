@@ -289,7 +289,6 @@ export default class RBTable extends React.Component {
       }
     });
     totalWidth = Math.max(totalWidth, this.refs.scrollX.clientWidth);
-    console.log('totalWidth', totalWidth);
     // 设置 header 宽度 = totalWidth
     setWidth(this.refs.header, px(totalWidth))
     // 设置 body 宽度，用来隐藏滚动条  
