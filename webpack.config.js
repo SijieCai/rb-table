@@ -2,9 +2,9 @@
 const path = require('path');
 module.exports = {
   context: __dirname,
-  entry: "./examples/index.js",
+  entry: "./doc/index.js",
   output: {
-    path: path.join(__dirname, 'examples'),
+    path: path.join(__dirname, 'doc'),
     filename: "bundle.js"
   },
   externals: {
@@ -19,11 +19,5 @@ module.exports = {
     ]
   },
   devtool: '',
-  mode: 'development',
-  devServer: {
-    contentBase: path.join(__dirname, 'examples'),
-    compress: true,
-    port: 9000
-  }
-
+  mode: 'production'
 };

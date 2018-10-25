@@ -103,8 +103,10 @@ export default class RBTable extends React.Component {
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
-    if (hasOffset) {
+    if (!this.autoSize) {
       e.preventDefault();
+    }
+    if (hasOffset) {
       e.stopPropagation();
     }
   }
@@ -125,36 +127,42 @@ export default class RBTable extends React.Component {
 
   handleWindowMouseMove({ clientX, clientY }) {
     if (this.mouseIsDownBottom) {
-      this.handleMouseMove(clientX, 0);
+      this.handleMouseMove(clientX, this.y);
     } else if (this.mouseIsDownRight) {
-      this.handleMouseMove(0, clientY);
+      this.handleMouseMove(this.x, clientY);
     }
   }
 
   hScrollPanelMouseDown(e) {
+    if (e.nativeEvent.which !== 1) return;
     e.preventDefault();
+    e.stopPropagation();
     let x = e.clientX - this.refs.hScrollBar.getBoundingClientRect().left;
     this.scrollByOffset(x, 0);
   }
 
   vScrollPanelMouseDown(e) {
+    if (e.nativeEvent.which !== 1) return;
     e.preventDefault();
+    e.stopPropagation();
     let y = e.clientY - this.refs.vScrollBar.getBoundingClientRect().top;
     this.scrollByOffset(0, y);
   }
 
   hScrollBarMouseDown(e) {
+    if (e.nativeEvent.which !== 1) return;
     e.preventDefault();
     e.stopPropagation();
     this.mouseIsDownBottom = true;
-    this.setLocation(e);
+    this.setLocation(e.clientX, e.clientY);
   }
 
   vScrollBarMouseDown(e) {
+    if (e.nativeEvent.which !== 1) return;
     e.preventDefault();
     e.stopPropagation();
     this.mouseIsDownRight = true;
-    this.setLocation(e);
+    this.setLocation(e.clientX, e.clientY);
   }
 
   handleMouseMove(clientX, clientY) {
@@ -188,10 +196,16 @@ export default class RBTable extends React.Component {
 
   // 表格宽高布局
   getTableWidthHeight() {
-    const { virtualTable } = this.refs;
+    const { virtualTable, scrollX } = this.refs;
 
     const columnWs = [];
     const rowHs = [];
+
+    virtualTable.style.width = '';
+
+    if (virtualTable.clientWidth < scrollX.clientWidth) {
+      virtualTable.style.width = px(scrollX.clientWidth);
+    }
 
     const headerRow = virtualTable.querySelector('thead > tr');
     const colgroup = virtualTable.querySelector('colgroup');
@@ -217,6 +231,7 @@ export default class RBTable extends React.Component {
         width = Math.min(maxWidth || width, width);
         width = Math.max(minWidth || width, width);
         colgroup.children[i].style.width = px(width);
+
       }
     })
     getColumnWs();
@@ -231,7 +246,7 @@ export default class RBTable extends React.Component {
   // 对齐表格的，主要是表头固定，左右两列也是固定，都是手动通过代码进行固定
   alignTable() {
     const { headerLeft, headerRight, body } = this.refs;
-    const { columns, prefixCls } = this.props;
+    const { columns } = this.props;
 
     const fixedHeaders = [headerLeft, headerRight].filter(i => !!i);
 
@@ -322,7 +337,6 @@ export default class RBTable extends React.Component {
     const contentWidth = bodyMiddle.offsetWidth;
     const contentHeight = bodyMiddle.offsetHeight;
     var hOffsetRatio = 1, vOffsetRatio = 1;
-
     if (contentHeight <= bodyHeight) {
       vScrollPanel.style.visibility = 'hidden';
       vScrollBar = null;
@@ -336,21 +350,21 @@ export default class RBTable extends React.Component {
 
     if (hScrollBar) {
       var hScrollPanelWidth = hScrollPanel.offsetWidth;
-      var hScrollBarWidth = hScrollPanelWidth * bodyWidth / contentWidth;
+      var hScrollBarWidth = Math.max(hScrollPanelWidth * bodyWidth / contentWidth, 20);
       hOffsetRatio = (contentWidth - bodyWidth) / (hScrollPanelWidth - hScrollBarWidth);
     }
 
     if (vScrollBar) {
       var vScrollPanelHeight = vScrollPanel.offsetHeight;
-      var vScrollBarHeight = vScrollPanelHeight * bodyHeight / contentHeight;
+      var vScrollBarHeight = Math.max(vScrollPanelHeight * bodyHeight / contentHeight, 20);
       vOffsetRatio = (contentHeight - bodyHeight) / (vScrollPanelHeight - vScrollBarHeight);
     }
 
     offsetX = offsetX * hOffsetRatio;
     offsetY = offsetY * vOffsetRatio;
 
-    var left = Math.round(this.refs.scrollX.scrollLeft + offsetX);
-    var top = Math.round(this.refs.body.scrollTop + offsetY);
+    var left = this.refs.scrollX.scrollLeft + offsetX;
+    var top = this.refs.body.scrollTop + offsetY;
     // hasOffset 用来判断 wheel 已经滑到边缘，这样可以不用 preventDefault 和 stopPropagation wheel 的事件，让外层的滚动元素起作用
     var hasOffset = true;
     if (left > contentWidth - bodyWidth) {
@@ -543,14 +557,14 @@ export default class RBTable extends React.Component {
           ref="vScrollPanel"
           onMouseDown={this.vScrollPanelMouseDown}
         >
-          <div ref="vScrollBar" onMouseDown={this.vScrollBarMouseDown} className={`${prefixCls}__vscroll__bar`} />
+          <div ref="vScrollBar" className={`${prefixCls}__vscroll__bar`} onMouseDown={this.vScrollBarMouseDown} />
         </div>
 
         <div className={`${prefixCls}__hscroll`}
           ref="hScrollPanel"
           onMouseDown={this.hScrollPanelMouseDown}
         >
-          <div ref="hScrollBar" onMouseDown={this.hScrollBarMouseDown} className={`${prefixCls}__hscroll__bar`} />
+          <div ref="hScrollBar" className={`${prefixCls}__hscroll__bar`} onMouseDown={this.hScrollBarMouseDown} />
         </div>
         {this.props.children}
       </div>

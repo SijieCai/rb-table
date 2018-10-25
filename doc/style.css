@@ -1,0 +1,21 @@
+
+@import '~react-resizable/css/styles.css';
+.box.react-resizable {
+  padding: 20px;
+  margin-left: -20px;
+}
+.box .react-resizable-handle {
+  background: red;
+  border-radius: 3px;
+}
+
+.block {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.wrapper {
+  height: 100%;
+  overflow: auto;
+  padding-right: 30px;
+}

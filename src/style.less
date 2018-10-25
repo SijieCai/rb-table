@@ -3,17 +3,18 @@
 @rb-table-scroll-bar-color: #bfbfbf;
 @rb-table-scroll-bar-color-hover: darken(@rb-table-scroll-bar-color, 25%);
 @rb-table-scroll-bar-background: #f9f9f9;
-@rb-table-scroll-bar-width: 12px;
-@rb-table-scroll-bar-padding: 2px;
-@prefix-rb-table-padding: (@rb-table-scroll-bar-width + 5px);
+@rb-table-scroll-bar-width: 14px;
+@rb-table-scroll-bar-padding: 3px;
 @rb-table-background: #FFF;
 @rb-table-color: #333;
-@rb-table-row-hover-background: lighten(@rb-table-scroll-bar-color, 55%);
+@rb-table-row-hover-background: lighten(@rb-table-scroll-bar-color, 23%);
 .@{prefix-rb-table} {
   overflow: hidden;
   position: relative;
   background: @rb-table-background;
   color: @rb-table-color;
+  box-sizing: border-box;
+  border: 1px solid @rb-table-cell-border-color;
   table {
     width: 100%;
     border-spacing: 0;
@@ -79,18 +80,26 @@
   &__hscroll {
     visibility: hidden;
     position: absolute;
+    box-sizing: border-box;
     left: 0;
     bottom: 0;
     right: @rb-table-scroll-bar-width;
-    padding: @rb-table-scroll-bar-padding 0;
     background: @rb-table-scroll-bar-background;
     height: @rb-table-scroll-bar-width;
     z-index: 1;
     &__bar {
-      background: @rb-table-scroll-bar-color;
-      border-radius: @rb-table-scroll-bar-width;
+      padding: @rb-table-scroll-bar-padding 0;
       height: 100%;
-      &:hover {
+      box-sizing: border-box;
+      &:before {
+        content: '';
+        display: block;
+        background: @rb-table-scroll-bar-color;
+        border-radius: @rb-table-scroll-bar-width;
+        height: 100%;
+        width: 100%;
+      }
+      &:hover:before {
         background: @rb-table-scroll-bar-color-hover;
       }
     }
@@ -98,18 +107,24 @@
   &__vscroll {
     visibility: hidden;
     position: absolute;
+    box-sizing: border-box;
     background: @rb-table-scroll-bar-background;
     top: 0;
     bottom: 0;
     right: 0;
-    padding: 0 @rb-table-scroll-bar-padding;
     width: @rb-table-scroll-bar-width;
     z-index: 1;
     &__bar {
-      background: @rb-table-scroll-bar-color;
-      border-radius: @rb-table-scroll-bar-width;
-      width: 100%;
-      &:hover {
+      padding: 0 @rb-table-scroll-bar-padding;
+      &:before {
+        content: '';
+        display: block;
+        background: @rb-table-scroll-bar-color;
+        border-radius: @rb-table-scroll-bar-width;
+        height: 100%;
+        width: 100%;
+      }
+      &:hover:before {
         background: @rb-table-scroll-bar-color-hover;
       }
     }
