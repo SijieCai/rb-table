@@ -1,6 +1,6 @@
 # rb-table
 
-Declarative React table component with highly customizable scroll and layout feature
+Declarative React table component with highly customizable scroll and layout feature. [demo](https://sijiecai.github.io/rb-table/index.html)
 
 ## Festures
 - Declarative react table component.
