@@ -2705,7 +2705,6 @@ var RBTable = function (_React$Component) {
       this.refs.scrollX.style.overflowX = 'auto';
       this.refs.body.style.paddingRight = 0;
       this.refs.body.style.overflowY = 'hidden';
-      this.table.querySelector('.' + prefixCls + '-fixed--right').style.right = 0;
       this.table.style.height = px(this.refs.scrollX.offsetHeight);
     } else {
       var height = tableClientHeight - headerHeight - hScrollbarHeight;

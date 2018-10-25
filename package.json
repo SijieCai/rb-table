@@ -12,7 +12,7 @@
     "src"
   ],
   "scripts": {
-    "start": "webpack",
+    "start": "webpack-dev-server --hot",
     "clean": "rimraf lib dist es coverage",
     "build": "npm run clean && rollup -c",
     "prepare": "npm run clean && npm run build"
@@ -61,6 +61,7 @@
     "jest": "^22.4.3",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "react-resizable": "^1.7.5",
     "rimraf": "^2.6.2",
     "rollup": "^0.66.0",
     "rollup-plugin-babel": "^3.0.3",
