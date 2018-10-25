@@ -2,7 +2,7 @@ const config = require('./webpack.config');
 const path = require('path');
 config.mode = 'development';
 config.devServer = {
-  contentBase: path.join(__dirname, 'doc'),
+  contentBase: path.join(__dirname, 'docs'),
   compress: true,
   port: 9000
 }
