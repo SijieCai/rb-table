@@ -5,7 +5,8 @@ module.exports = {
   entry: "./docs/index.js",
   output: {
     path: path.join(__dirname, 'docs'),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: '/docs'
   },
   externals: {
     'react': "React",
