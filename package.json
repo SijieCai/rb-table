@@ -16,7 +16,7 @@
     "clean": "rimraf lib dist es coverage",
     "build": "rollup -c",
     "build-doc": "webpack",
-    "prepare": "npm run clean && npm run build && npm run build-doc"
+    "prepare": "npm run clean && npm run build"
   },
   "keywords": [
     "react",
