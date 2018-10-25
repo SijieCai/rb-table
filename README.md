@@ -69,12 +69,12 @@ Put `<RBTable/>` in your page with props and you are good to go.
 // my-rb-table.less
 @import "~rb-table"
 @prefix-rb-table: rb-table;
-@rb-table-scroll-bar-color: ; @your-primary-color // default #777
-@rb-table-cell-border-color: #f0f0f0;
-@rb-table-scroll-bar-background: #eee;
-@rb-table-scroll-bar-width: 10px;
-@rb-table-scroll-bar-padding: 1px;
-@rb-table-scroll-bar-right-offset: 2px;
+@rb-table-cell-border-color: #e8e8e8;
+@rb-table-scroll-bar-color: #bfbfbf;
+@rb-table-scroll-bar-color-hover: darken(@rb-table-scroll-bar-color, 25%);
+@rb-table-scroll-bar-background: #f9f9f9;
+@rb-table-scroll-bar-width: 12px;
+@rb-table-scroll-bar-padding: 2px;
 @prefix-rb-table-padding: (@rb-table-scroll-bar-width + 5px);
 @rb-table-background: #FFF;
 @rb-table-color: #333;
