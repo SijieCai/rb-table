@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'docs'),
     filename: "bundle.js",
-    publicPath: '/docs'
+    publicPath: '/rb-table'
   },
   externals: {
     'react': "React",
