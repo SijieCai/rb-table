@@ -1,9 +1,18 @@
-
 @import '~react-resizable/css/styles.css';
+html {
+  font: 14px "Helvetica Neue", "Lucida Grande", "Arial";
+  background: #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ECE9E9));
+  background: #ECE9E9 -moz-linear-gradient(top, #fff, #ECE9E9);
+  background-repeat: no-repeat;
+  /* color: #555; */
+  -webkit-font-smoothing: antialiased;
+}
+
 .box.react-resizable {
   padding: 20px;
   margin-left: -20px;
 }
+
 .box .react-resizable-handle {
   background: red;
   border-radius: 3px;

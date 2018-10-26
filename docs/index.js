@@ -13,10 +13,10 @@ class Application extends React.Component {
   render() {
     const { header1Width, header2Width, header3Width, fixedHeader, bump1000, bump5000, noHeight } = this.state;
     return (
-      <div style={{ padding: 30, background: 'white' }}>
+      <div style={{ padding: 30 }}>
         <div className="block">
 
-          <h2>Playground</h2>
+          <h1>rb-table Playground</h1>
           <div>
             <label><input checked={!!header1Width} onChange={() => this.setState({ header1Width: !header1Width })} type="checkbox" /> Set header1 minWidth: 100 and maxWidth: 120, it fit one line so minWidth is used at first.</label><br />
 
@@ -69,14 +69,13 @@ class Application extends React.Component {
 
           <p><b>Try resize the table see how it works, drag the red block!</b></p>
           <p><b>Use Ctrl + F to search and locate content.</b></p>
-
+          <p><a href="https://github.com/sijiecai/rb-table/blob/master/docs/index.js"> see code example.</a></p>
           <h2>Layout Design</h2>
           <p>
             The column layout strategy of rb-table simply try to make content in one line as much as possible. If columns total width exceeds container width, it display a horizontal scrollbar.
         </p>
           <p>
             The height layout strategy depends on if .rb-table has a specified height, if it does a vertical scrollbar will display when table total height is exceeded. otherwise it just takes as height as it should be just like normal table. You can specify height using css style or to make it into a column flexbox and set "flex: 1 0 0". 
-            <a href="https://github.com/sijiecai/rb-table/blob/master/docs/index.js"> see code example.</a>
           </p>
 
           <h2>Comparison with existing Library</h2>
