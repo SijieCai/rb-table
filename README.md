@@ -62,6 +62,27 @@ Put `<RBTable/>` in your page with props and you are good to go.
 |  headerClassName | Additional header class | string |
 |  headerStyle | Additional header style | object |
 
+## Layout Design 
+The column layout strategy of rb-table simply try to make content in one line as much as possible. If columns total width exceeds container width, it display a horizontal scrollbar.
+
+The height layout strategy depends on if .rb-table has a specified height, if it does a vertical scrollbar will display when table total height is exceeded. otherwise it just takes as height as it should be just like normal table. You can specify height using css style or to make it into a column flexbox and set "flex: 1 0 0". 
+        
+
+## Comparison with existing Library
+
+Compare with [react-virtualize](https://bvaughn.github.io/react-virtualized/#/components/Table) and [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2)
+          
+- **rb-table pros:** you can use `Crtl + F` to search and auto scroll to matched content.
+- **react-virtualize & fixed-data-table-2 pros:** Handles large amount of data. fixed-data-table-2 is feature rich but the scrolling experience is not so good.
+          
+
+ Compare with antd [rc-table](https://ant.design/components/table-cn/)     
+- **rb-table pro:** You are able to scroll the table anywhere, even on top of fixed columns/header. Better performance.
+- **rc-table pro:** >Much more features provided, bundle with antd is a big plus.
+      
+Unique of rb-table
+A special designed table layout are provided which makes table layout so much easier in a lot scenes.
+
 
 ## Customize Theme
 `rb-table` provide the less/scss style file with predefined theme variables, so you can easily customize the look by modifying these variable as well as override the default style. if you are useing wepack, bellow is an example as well as a complete list of variables:
