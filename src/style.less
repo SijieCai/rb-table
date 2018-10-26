@@ -15,6 +15,7 @@
   color: @rb-table-color;
   box-sizing: border-box;
   border: 1px solid @rb-table-cell-border-color;
+  touch-action: none!important;
   table {
     width: 100%;
     border-spacing: 0;
@@ -28,10 +29,12 @@
     overflow-x: scroll;
     overflow-y: hidden;
     padding-bottom: 99999px;
+    touch-action: none!important;
   }
   &__body {
-    overflow: scroll;
+    overflow-y: scroll;
     overflow-x: hidden;
+    touch-action: none!important;
     box-sizing: border-box;
     padding-right: 300px;
     .@{prefix-rb-table}-hidden-layout {
@@ -91,6 +94,7 @@
       padding: @rb-table-scroll-bar-padding 0;
       height: 100%;
       box-sizing: border-box;
+      touch-action: none!important;
       &:before {
         content: '';
         display: block;
@@ -116,6 +120,7 @@
     z-index: 1;
     &__bar {
       padding: 0 @rb-table-scroll-bar-padding;
+      touch-action: none!important;
       &:before {
         content: '';
         display: block;

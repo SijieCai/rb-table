@@ -13,7 +13,7 @@ class Application extends React.Component {
   render() {
     const { header1Width, header2Width, header3Width, fixedHeader, bump1000, bump5000, noHeight } = this.state;
     return (
-      <div style={{ padding: 30 }}>
+      <div>
         <div className="block">
 
           <h1>rb-table Playground</h1>
@@ -89,7 +89,7 @@ class Application extends React.Component {
           <p>Compare with antd <a href="https://ant.design/components/table-cn/">rc-table</a></p>
           <ul>
             <li><b>rb-table pro:</b> You are able to scroll the table anywhere, even on top of fixed columns/header. Better performance.</li>
-            <li><b>rc-table pro:</b>Much more features provided, bundle with antd is a big plus.</li>
+            <li><b>rc-table pro:</b> Much more features provided, bundle with antd is a big plus.</li>
           </ul>
 
           <p>Unique of rb-table</p>

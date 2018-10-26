@@ -77,8 +77,8 @@ Compare with [react-virtualize](https://bvaughn.github.io/react-virtualized/#/co
           
 
  Compare with antd [rc-table](https://ant.design/components/table-cn/)     
-- **rb-table pro:** You are able to scroll the table anywhere, even on top of fixed columns/header. Better performance.
-- **rc-table pro:** >Much more features provided, bundle with antd is a big plus.
+- **rb-table pros:** You are able to scroll the table anywhere, even on top of fixed columns/header. Better performance.
+- **rc-table pros:** Much more features provided, bundle with antd is a big plus.
       
 Unique of rb-table
 A special designed table layout are provided which makes table layout so much easier in a lot scenes.

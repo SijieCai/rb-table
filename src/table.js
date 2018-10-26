@@ -25,6 +25,18 @@ function setWidth(ele, value) {
 function setHeight(ele, value) {
   ele.style.height = value;
 }
+
+function clientXY({ touches, clientX, clientY } = {}) {
+  if (touches && touches.length > 0) {
+    var touch = touches[0];
+    clientX = touch.clientX;
+    clientY = touch.clientY;
+  }
+  return { clientX, clientY };
+}
+
+function preventDefault(e) { e.preventDefault(); }
+
 // 遍历 
 function forEachChildren(parent, cb) {
   for (var i = 0; i < parent.children.length; i++) {
@@ -51,23 +63,26 @@ export default class RBTable extends React.Component {
     this.handleResize = this.handleResize.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.handleClickRow = this.handleClickRow.bind(this);
-    this.handleWindowMouseUp = this.handleWindowMouseUp.bind(this);
-    this.handleWindowMouseMove = this.handleWindowMouseMove.bind(this);
+    this.handleMoveEnd = this.handleMoveEnd.bind(this);
+    this.handleMove = this.handleMove.bind(this);
     this.hScrollPanelMouseDown = this.hScrollPanelMouseDown.bind(this);
     this.vScrollPanelMouseDown = this.vScrollPanelMouseDown.bind(this);
-    this.hScrollBarMouseDown = this.hScrollBarMouseDown.bind(this);
-    this.vScrollBarMouseDown = this.vScrollBarMouseDown.bind(this);
+    this.horizontalMoveStart = this.horizontalMoveStart.bind(this);
+    this.verticalMoveStart = this.verticalMoveStart.bind(this);
+    this.touchStart = this.touchStart.bind(this);
+    this.touchEnd = this.touchEnd.bind(this);
   }
+
 
   componentWillUnmount() {
     addResizeListener(this.table, this.handleResize);
-    window.removeEventListener('mouseup', this.handleWindowMouseUp);
-    window.removeEventListener('mousemove', this.handleWindowMouseMove);
+    window.removeEventListener('mousemove', this.handleMove);
+    window.removeEventListener('mouseup', this.handleMoveEnd);
   }
 
   componentDidMount() {
-    window.addEventListener('mouseup', this.handleWindowMouseUp);
-    window.addEventListener('mousemove', this.handleWindowMouseMove);
+    window.addEventListener('mousemove', this.handleMove);
+    window.addEventListener('mouseup', this.handleMoveEnd);
     // 子元素或者兄弟元素可能在之后加载导致当前元素的高度变化，setTimeout hack 这个情况
     setTimeout(() => {
       this.reflow();
@@ -115,61 +130,78 @@ export default class RBTable extends React.Component {
     this.props.onRowClick && this.props.onRowClick(item, i)
   }
 
-  setLocation(clientX, clientY) {
+  setLocation({ clientX, clientY }) {
     this.x = clientX;
     this.y = clientY;
   }
 
-  handleWindowMouseUp() {
+  handleMoveEnd() {
     this.mouseIsDownRight = false;
     this.mouseIsDownBottom = false;
+    this.touchIsStarted = false;
   }
 
-  handleWindowMouseMove({ clientX, clientY }) {
+  handleMove(e) {
+    const { clientX, clientY } = clientXY(e);
+
     if (this.mouseIsDownBottom) {
-      this.handleMouseMove(clientX, this.y);
+      this.move({ clientX, clientY: this.y });
     } else if (this.mouseIsDownRight) {
-      this.handleMouseMove(this.x, clientY);
+      this.move({ clientX: this.x, clientY });
+    } else if (this.touchIsStarted) {
+      e.preventDefault();
+      this.move({ clientX, clientY }, -1);
     }
   }
 
+  move({ clientX, clientY }, multi = 1) {
+    var offsetX = clientX - this.x;
+    var offsetY = clientY - this.y;
+    this.setLocation({ clientX, clientY });
+    this.scrollByOffset(multi * offsetX, multi * offsetY);
+  }
+
+  touchStart(e) {
+    this.touchIsStarted = true;
+    this.setLocation(clientXY(e));
+  }
+
+  touchEnd(e) {
+    this.touchIsStarted = false;
+  }
+
   hScrollPanelMouseDown(e) {
-    if (e.nativeEvent.which !== 1) return;
+    if (e.nativeEvent.which > 1) return;
     e.preventDefault();
     e.stopPropagation();
-    let x = e.clientX - this.refs.hScrollBar.getBoundingClientRect().left;
+    const { left, right } = this.refs.hScrollBar.getBoundingClientRect();
+    let x = clientXY(e).clientX - (left + right) * .5;
     this.scrollByOffset(x, 0);
   }
 
   vScrollPanelMouseDown(e) {
-    if (e.nativeEvent.which !== 1) return;
+    if (e.nativeEvent.which > 1) return;
     e.preventDefault();
     e.stopPropagation();
-    let y = e.clientY - this.refs.vScrollBar.getBoundingClientRect().top;
+    const { top, bottom } = this.refs.vScrollBar.getBoundingClientRect();
+    let y = clientXY(e).clientY - (top + bottom) * .5;
     this.scrollByOffset(0, y);
   }
 
-  hScrollBarMouseDown(e) {
-    if (e.nativeEvent.which !== 1) return;
+  horizontalMoveStart(e) {
+    if (e.nativeEvent.which > 1) return;
     e.preventDefault();
     e.stopPropagation();
     this.mouseIsDownBottom = true;
-    this.setLocation(e.clientX, e.clientY);
+    this.setLocation(clientXY(e));
   }
 
-  vScrollBarMouseDown(e) {
-    if (e.nativeEvent.which !== 1) return;
+  verticalMoveStart(e) {
+    if (e.nativeEvent.which > 1) return;
     e.preventDefault();
     e.stopPropagation();
     this.mouseIsDownRight = true;
-    this.setLocation(e.clientX, e.clientY);
-  }
-
-  handleMouseMove(clientX, clientY) {
-    const offsetX = clientX - this.x;
-    var offsetY = clientY - this.y;
-    this.setLocation(clientX, clientY);
-    this.scrollByOffset(offsetX, offsetY);
+    this.setLocation(clientXY(e));
   }
 
   getHoverClass() {
@@ -203,9 +235,9 @@ export default class RBTable extends React.Component {
 
     virtualTable.style.width = '';
 
-    if (virtualTable.offsetWidth < scrollX.clientWidth - this.props.columns.length ) {
+    if (virtualTable.offsetWidth < scrollX.clientWidth - this.props.columns.length) {
       // 获取列换的加了1，这个减掉
-      virtualTable.style.width = px(scrollX.clientWidth - this.props.columns.length );
+      virtualTable.style.width = px(scrollX.clientWidth - this.props.columns.length);
     }
 
     const headerRow = virtualTable.querySelector('thead > tr');
@@ -518,18 +550,30 @@ export default class RBTable extends React.Component {
     const rightColumns = columns.filter(i => i.fixed === 'right');
 
     const getParams = side => ({ side, columns, leftColumns, rightColumns, middleColumns, data });
+    const noTouchScroll = {
+      onTouchStart: preventDefault, onTouchMove: preventDefault
+    }
     return (
       <div className={`${prefixCls} ${className || ''}`}
         key="rb-table"
         ref={this.setTableRef}
         onWheel={this.handleScroll}
+        onTouchStart={this.touchStart}
+        onTouchMove={this.handleMove}
+        onTouchEnd={this.touchEnd}
         style={style}
       >
-        <div ref="scrollX" className={`${prefixCls}-scrollx`} onScroll={() => this.scrollByOffset(0, 0)} >
+        <div ref="scrollX" className={`${prefixCls}-scrollx`}
+          onScroll={() => this.scrollByOffset(0, 0)}
+          {...noTouchScroll}
+        >
           <div className={`${prefixCls}__header`} ref="header" >
             {this.renderHeaderSideOf(getParams('Middle'))}
           </div>
-          <div className={`${prefixCls}__body`} ref="body" onScroll={() => this.scrollByOffset(0, 0)}>
+          <div className={`${prefixCls}__body`} ref="body"
+            onScroll={() => this.scrollByOffset(0, 0)}
+            {...noTouchScroll}
+          >
             {this.renderBodySideOf(getParams('Middle'))}
             {this.renderVirtualTable(getParams('virtual'))}
           </div>
@@ -557,15 +601,27 @@ export default class RBTable extends React.Component {
         <div className={`${prefixCls}__vscroll`}
           ref="vScrollPanel"
           onMouseDown={this.vScrollPanelMouseDown}
+          onTouchStart={this.vScrollPanelMouseDown}
         >
-          <div ref="vScrollBar" className={`${prefixCls}__vscroll__bar`} onMouseDown={this.vScrollBarMouseDown} />
+          <div ref="vScrollBar" className={`${prefixCls}__vscroll__bar`}
+            onMouseDown={this.verticalMoveStart}
+            onTouchStart={this.verticalMoveStart}
+            onTouchMove={this.handleMove}
+            onTouchEnd={this.handleMoveEnd}
+          />
         </div>
 
         <div className={`${prefixCls}__hscroll`}
           ref="hScrollPanel"
           onMouseDown={this.hScrollPanelMouseDown}
+          onTouchStart={this.hScrollPanelMouseDown}
         >
-          <div ref="hScrollBar" className={`${prefixCls}__hscroll__bar`} onMouseDown={this.hScrollBarMouseDown} />
+          <div ref="hScrollBar" className={`${prefixCls}__hscroll__bar`}
+            onMouseDown={this.horizontalMoveStart}
+            onTouchStart={this.horizontalMoveStart}
+            onTouchMove={this.handleMove}
+            onTouchEnd={this.handleMoveEnd}
+          />
         </div>
         {this.props.children}
       </div>
