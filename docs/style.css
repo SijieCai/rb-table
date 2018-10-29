@@ -6,7 +6,7 @@ html {
   background-repeat: no-repeat;
   /* color: #555; */
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .box.react-resizable {

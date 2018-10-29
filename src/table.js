@@ -35,8 +35,6 @@ function clientXY({ touches, clientX, clientY } = {}) {
   return { clientX, clientY };
 }
 
-function preventDefault(e) { e.preventDefault(); }
-
 // 遍历 
 function forEachChildren(parent, cb) {
   for (var i = 0; i < parent.children.length; i++) {
@@ -113,7 +111,6 @@ export default class RBTable extends React.Component {
   }
 
   handleScroll(e) {
-    if (this.autoSize) return;
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
@@ -327,6 +324,7 @@ export default class RBTable extends React.Component {
     body.style.width = px(this.refs.header.clientWidth + (this.autoSize ? 0 : (300 + body.offsetWidth - body.clientWidth)));
 
     let headerHeight = this.refs.header.offsetHeight;
+    this.refs.header.style.height = px(headerHeight);
     // 设置 header 行高
     fixedHeaders.forEach(i => {
       setHeight(i.querySelector('tr'), px(headerBodyHeight));
@@ -361,7 +359,6 @@ export default class RBTable extends React.Component {
     if (!this.table || this.autoSize) {
       hScrollPanel.style.visibility = 'hidden';
       vScrollPanel.style.visibility = 'hidden';
-      return;
     }
     if (!bodyMiddle) return;
     const bodyWidth = this.refs.scrollX.offsetWidth;
@@ -550,9 +547,7 @@ export default class RBTable extends React.Component {
     const rightColumns = columns.filter(i => i.fixed === 'right');
 
     const getParams = side => ({ side, columns, leftColumns, rightColumns, middleColumns, data });
-    const noTouchScroll = {
-      onTouchStart: preventDefault, onTouchMove: preventDefault
-    }
+
     return (
       <div className={`${prefixCls} ${className || ''}`}
         key="rb-table"
@@ -565,14 +560,13 @@ export default class RBTable extends React.Component {
       >
         <div ref="scrollX" className={`${prefixCls}-scrollx`}
           onScroll={() => this.scrollByOffset(0, 0)}
-          {...noTouchScroll}
         >
           <div className={`${prefixCls}__header`} ref="header" >
             {this.renderHeaderSideOf(getParams('Middle'))}
           </div>
           <div className={`${prefixCls}__body`} ref="body"
             onScroll={() => this.scrollByOffset(0, 0)}
-            {...noTouchScroll}
+
           >
             {this.renderBodySideOf(getParams('Middle'))}
             {this.renderVirtualTable(getParams('virtual'))}
