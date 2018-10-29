@@ -356,10 +356,6 @@ export default class RBTable extends React.Component {
     var { bodyMiddle,
       hScrollBar, hScrollPanel,
       vScrollBar, vScrollPanel } = this.refs;
-    if (!this.table || this.autoSize) {
-      hScrollPanel.style.visibility = 'hidden';
-      vScrollPanel.style.visibility = 'hidden';
-    }
     if (!bodyMiddle) return;
     const bodyWidth = this.refs.scrollX.offsetWidth;
     // body 内容高度，不包含 header
@@ -367,12 +363,12 @@ export default class RBTable extends React.Component {
     const contentWidth = bodyMiddle.offsetWidth;
     const contentHeight = bodyMiddle.offsetHeight;
     var hOffsetRatio = 1, vOffsetRatio = 1;
-    if (contentHeight <= bodyHeight) {
+    if (this.autoSize || contentHeight <= bodyHeight) {
       vScrollPanel.style.visibility = 'hidden';
       vScrollBar = null;
       vScrollPanel = null;
     }
-    if (contentWidth <= bodyWidth) {
+    if (this.autoSize || contentWidth <= bodyWidth) {
       hScrollPanel.style.visibility = 'hidden';
       hScrollBar = null;
       hScrollPanel = null;

@@ -64,7 +64,8 @@
     }
     &--right {
       right: 0;
-      border-left: 1px solid @rb-table-cell-border-color;
+      border: 1px solid @rb-table-cell-border-color;
+      border-width: 0 1px;
     }
   }
   &-row {
@@ -114,7 +115,7 @@
     box-sizing: border-box;
     background: @rb-table-scroll-bar-background;
     top: 0;
-    bottom: 0;
+    bottom: @rb-table-scroll-bar-padding;
     right: 0;
     width: @rb-table-scroll-bar-width;
     z-index: 1;
