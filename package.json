@@ -35,17 +35,16 @@
   ],
   "license": "ISC",
   "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
+    "react": "0.14.x || 15.x || 16.x",
+    "react-dom": "0.14.x || 15.x || 16.x"
   },
   "dependencies": {
-    "prop-types": "^15.5.7",
-    "normalize-wheel": "^1.0.1"
+    "normalize-wheel": "^1.0.1",
+    "prop-types": "^15.5.7"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.3",
     "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -74,6 +73,8 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-terser": "^3.0.0",
     "style-loader": "^0.23.1",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "webpack": "^4.23.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
