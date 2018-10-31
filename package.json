@@ -1,6 +1,6 @@
 {
   "name": "rb-table",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "High performance table with fixed columns and header support",
   "main": "lib/rb-table.js",
   "unpkg": "dist/rb-table.js",
@@ -61,6 +61,8 @@
     "jest": "^22.4.3",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "react-resizable": "^1.7.5",
     "rimraf": "^2.6.2",
     "rollup": "^0.66.0",
@@ -73,8 +75,6 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-terser": "^3.0.0",
     "style-loader": "^0.23.1",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
     "webpack": "^4.23.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
