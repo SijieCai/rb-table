@@ -114,10 +114,12 @@ export default class RBTable extends React.Component {
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
+    if(pixelX !== 0) {
+      e.preventDefault();
+    }
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
 
     if (hasOffset) {
-      console.log('hasOffset')
       if (!this.autoSize) {
         e.preventDefault();
       }
