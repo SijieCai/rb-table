@@ -106,6 +106,8 @@ export default class RBTable extends React.Component {
   }
 
   reflow() {
+    // setTimeout reflow my enter into situation of this component was destroyed immediately
+    if(!this.refs.virtualTable || !this.refs.body) return;
     this.alignTable();
     this.scrollByOffset(0, 0);
   }
