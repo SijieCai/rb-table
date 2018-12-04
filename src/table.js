@@ -107,16 +107,17 @@ export default class RBTable extends React.Component {
 
   reflow() {
     // setTimeout reflow my enter into situation of this component was destroyed immediately
-    if(!this.refs.virtualTable || !this.refs.body) return;
+    if (!this.refs.virtualTable || !this.refs.body) return;
     this.alignTable();
     this.scrollByOffset(0, 0);
+    this.table.style.visibility = 'visible';
   }
 
   handleScroll(e) {
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
-    if(pixelX !== 0) {
+    if (pixelX !== 0) {
       e.preventDefault();
     }
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
@@ -558,7 +559,7 @@ export default class RBTable extends React.Component {
         onTouchStart={this.touchStart}
         onTouchMove={this.handleMove}
         onTouchEnd={this.touchEnd}
-        style={style}
+        style={Object.assign({ visibility: 'hidden' }, style)}
       >
         <div ref="scrollX" className={`${prefixCls}-scrollx`}
           onScroll={() => this.scrollByOffset(0, 0)}

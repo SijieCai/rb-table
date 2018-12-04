@@ -11,7 +11,7 @@ class Application extends React.Component {
   }
 
   render() {
-    const { header1Width, header2Width, header3Width, fixedHeader, bump1000, bump5000, noHeight } = this.state;
+    const { header1Width, hideTable, header2Width, header3Width, fixedHeader, bump1000, bump5000, noHeight } = this.state;
     return (
       <div>
         <div className="block">
@@ -34,8 +34,9 @@ class Application extends React.Component {
 
 
             <label><input checked={!!noHeight} onChange={() => this.setState({ noHeight: !noHeight })} type="checkbox" /> No specify height</label><br />
+            <label><input checked={!!hideTable} onChange={() => this.setState({ hideTable: !hideTable })} type="checkbox" /> Hide table</label><br />
           </div>
-
+          {!hideTable &&
           <ResizableBox className="box" height={250} width={800} draggableOpts={{ grid: [25, 25] }}>
             <div className="wrapper">
               <RBTable key={noHeight + ''} style={{ height: noHeight ? undefined : '100%' }}
@@ -65,7 +66,7 @@ class Application extends React.Component {
               />
             </div>
           </ResizableBox>
-
+          }
 
           <p><b>Try resize the table see how it works, drag the red block!</b></p>
           <p><b>Use Ctrl + F to search and locate content.</b></p>
