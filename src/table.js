@@ -344,14 +344,12 @@ export default class RBTable extends React.Component {
 
     // 设置高度，形成一个上下布局，上部固定高度，底部（body）占满
     if (tableClientHeight > 99999 || this.autoSize) {
-
       this.autoSize = true;
       body.style.width = px(this.refs.header.clientWidth);
       this.refs.scrollX.style.paddingBottom = 0;
       this.refs.scrollX.style.overflowX = 'auto';
       this.refs.body.style.paddingRight = 0;
       this.refs.body.style.overflowY = 'hidden';
-      this.table.style.height = px(this.refs.scrollX.offsetHeight);
     } else {
       let height = tableClientHeight - headerHeight - hScrollbarHeight;
       this.refs.body.style.height = px(height);
