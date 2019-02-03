@@ -13,7 +13,7 @@ body {
   /* color: #555; */
   -webkit-font-smoothing: antialiased;
   margin: 0px;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 h1 {
@@ -26,6 +26,9 @@ p {
   line-height: 24px;
 }
 
+#app {
+  padding: 20px;
+}
 
 .box.react-resizable {
   padding: 20px;
@@ -39,6 +42,7 @@ p {
 
 .block {
   width: 80%;
+  min-width: 1000px;
   margin: 20px auto;
 }
 
