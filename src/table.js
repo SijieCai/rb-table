@@ -117,19 +117,14 @@ export default class RBTable extends React.Component {
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
-    // if (pixelX !== 0) {
-    //   e.preventDefault();
-    // }
+  
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
-
+ 
     if (hasOffset) {
-      this.refs.scrollX.style.overflowX = 'scroll';
       if (!this.autoSize) {
         e.preventDefault();
       }
-      e.stopPropagation();
-    } else {
-      this.refs.scrollX.style.overflowX = 'hidden';
+      e.stopPropagation(); 
     }
   }
 
@@ -327,7 +322,9 @@ export default class RBTable extends React.Component {
         }
       }
     });
-    totalWidth = Math.max(totalWidth, this.refs.scrollX.clientWidth);
+    const scrollXWidth = this.refs.scrollX.clientWidth;
+    this.refs.scrollX.style.overflowX = totalWidth <= scrollXWidth ? 'hidden' : 'scroll';
+    totalWidth = Math.max(totalWidth, scrollXWidth);
     // 设置 header 宽度 = totalWidth
     setWidth(this.refs.header, px(totalWidth))
     // 设置 body 宽度，用来隐藏滚动条  
