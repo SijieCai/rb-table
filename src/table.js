@@ -117,14 +117,14 @@ export default class RBTable extends React.Component {
     var { pixelY, pixelX } = normalizeWheel(e);
     pixelY = Math.round(pixelY * .5);
     pixelX = Math.round(pixelX * .5);
-  
+
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
- 
+
     if (hasOffset) {
       if (!this.autoSize) {
         e.preventDefault();
       }
-      e.stopPropagation(); 
+      e.stopPropagation();
     }
   }
 
@@ -250,13 +250,24 @@ export default class RBTable extends React.Component {
       colgroup.children[i].style.width = px(c.width || '');
     })
 
+
+    var me = this;
     // 获取列宽
     function getColumnWs() {
-      for (let i = 0; i < headerRow.children.length; i++) {
+      for (var i = 0; i < headerRow.children.length; i++) {
         // add 1 for firfox -mox-max-content use decimal, when offsetWidth is floor will cause column break into 2 lines.
-        columnWs[i] = headerRow.children[i].offsetWidth + 1;
+        const column = me.props.columns[i]
+        let width =  column.width || Math.ceil(headerRow.children[i].offsetWidth);
+
+        const { maxWidth, minWidth } = column
+        if (maxWidth || minWidth) {
+          width = Math.min(maxWidth || width, width);
+          width = Math.max(minWidth || width, width);
+        }
+        columnWs[i] = width;
       }
     }
+
     getColumnWs();
 
     // 如果有 maxWidth 和 minWidth，如果有需要重新 layout table
@@ -328,7 +339,7 @@ export default class RBTable extends React.Component {
     // 设置 header 宽度 = totalWidth
     setWidth(this.refs.header, px(totalWidth))
     // 设置 body 宽度，用来隐藏滚动条  
-    body.style.width = px(this.refs.header.clientWidth + (this.autoSize ? 0 : (300 + body.offsetWidth - body.clientWidth)));
+    body.style.width = px(this.refs.header.clientWidth + (this.autoSize ? 0 : (body.offsetWidth - body.clientWidth)));
 
     let headerHeight = this.refs.header.offsetHeight;
     this.refs.header.style.height = px(headerHeight);
@@ -414,6 +425,8 @@ export default class RBTable extends React.Component {
       top = 0;
       hasOffset = false;
     }
+    // console.log(this.refs.scrollX.scrollLeft, offsetX, contentWidth - bodyWidth, contentWidth, bodyWidth);
+    
     this.refs.body.scrollTop = top;
     this.refs.scrollX.scrollLeft = left;
     // 宽度是一个百分比
