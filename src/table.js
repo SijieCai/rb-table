@@ -121,9 +121,6 @@ export default class RBTable extends React.Component {
     const { hasOffset } = this.scrollByOffset(pixelX, pixelY);
 
     if (hasOffset) {
-      if (!this.autoSize) {
-        e.preventDefault();
-      }
       e.stopPropagation();
     }
   }
@@ -257,7 +254,7 @@ export default class RBTable extends React.Component {
       for (var i = 0; i < headerRow.children.length; i++) {
         // add 1 for firfox -mox-max-content use decimal, when offsetWidth is floor will cause column break into 2 lines.
         const column = me.props.columns[i]
-        let width =  column.width || Math.ceil(headerRow.children[i].offsetWidth);
+        let width =  column.width || (Math.ceil(headerRow.children[i].offsetWidth) + 1);
 
         const { maxWidth, minWidth } = column
         if (maxWidth || minWidth) {
