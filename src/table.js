@@ -207,7 +207,7 @@ export default class RBTable extends React.Component {
     const { prefixCls } = this.props
     var cls = ` ${prefixCls}-row--hover`
     if (this.props.onRowClick) {
-      cls += `${prefixCls}-row--clickable`
+      cls += ` ${prefixCls}-row--clickable`
     }
     return cls;
   }
